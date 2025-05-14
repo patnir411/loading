@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Loading Indicators</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .category-header {
+      grid-column: 1 / -1;
+      padding: 15px 0;
+      margin: 20px 0 10px;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #333;
+      border-bottom: 1px solid #eee;
+    }
+
+    /* Skeleton Screen (Card) Styles */
+    .skeleton-card {
+      width: 100%;
+      max-width: 180px;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .skeleton-image {
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(110deg, var(--neutral-light, #f5f5f5) 30%, var(--subtle-slate) 50%, var(--neutral-light, #f5f5f5) 70%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s ease-in-out infinite;
+    }
+
+    .skeleton-content {
+      padding: 12px;
+    }
+
+    .skeleton-title {
+      height: 16px;
+      width: 80%;
+      border-radius: 4px;
+      background: linear-gradient(110deg, var(--neutral-light, #f5f5f5) 30%, var(--subtle-slate) 50%, var(--neutral-light, #f5f5f5) 70%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s ease-in-out infinite;
+      animation-delay: 0.1s;
+      margin-bottom: 10px;
+    }
+
+    .skeleton-text {
+      height: 8px;
+      border-radius: 2px;
+      background: linear-gradient(110deg, var(--neutral-light, #f5f5f5) 30%, var(--subtle-slate) 50%, var(--neutral-light, #f5f5f5) 70%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s ease-in-out infinite;
+      margin-bottom: 6px;
+    }
+
+    .skeleton-text:nth-child(2) { width: 100%; animation-delay: 0.2s; }
+    .skeleton-text:nth-child(3) { width: 90%; animation-delay: 0.3s; }
+    .skeleton-text:nth-child(4) { width: 65%; animation-delay: 0.4s; }
+
+    @keyframes skeleton-loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -100% 0; }
+    }
+
+    /* Skeleton Screen (Profile) */
+    .skeleton-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      max-width: 180px;
+      padding: 12px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .skeleton-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(110deg, var(--neutral-light, #f5f5f5) 30%, var(--subtle-slate) 50%, var(--neutral-light, #f5f5f5) 70%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s ease-in-out infinite;
+    }
+
+    .skeleton-profile-content {
+      flex: 1;
+    }
+
+    .skeleton-name {
+      height: 12px;
+      width: 70%;
+      border-radius: 2px;
+      background: linear-gradient(110deg, var(--neutral-light, #f5f5f5) 30%, var(--subtle-slate) 50%, var(--neutral-light, #f5f5f5) 70%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s ease-in-out infinite;
+      animation-delay: 0.1s;
+      margin-bottom: 8px;
+    }
+
+    .skeleton-info {
+      height: 8px;
+      width: 90%;
+      border-radius: 2px;
+      background: linear-gradient(110deg, var(--neutral-light, #f5f5f5) 30%, var(--subtle-slate) 50%, var(--neutral-light, #f5f5f5) 70%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s ease-in-out infinite;
+      animation-delay: 0.2s;
+    }
+
+    /* Elegant Progress Bar */
+    .elegant-progress {
+      width: 100%;
+      max-width: 180px;
+      height: 4px;
+      background: #f1f3f5;
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .elegant-progress-bar {
+      height: 100%;
+      width: 40%;
+      background: var(--primary-blue);
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 2px;
+      animation: elegant-loading 2.5s ease-in-out infinite;
+    }
+
+    @keyframes elegant-loading {
+      0% { transform: translateX(-100%); }
+      20%, 100% { transform: translateX(250%); }
+    }
+
+    /* Step Progress */
+    .step-progress {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 180px;
+    }
+
+    .step-circle {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #e9ecef;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-active {
+      background: var(--primary-blue);
+      animation: step-pulse 1s ease-in-out infinite;
+    }
+
+    .step-completed {
+      background: var(--success-green);
+    }
+
+    .step-line {
+      flex: 1;
+      height: 2px;
+      background: #e9ecef;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step-line-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: var(--primary-blue);
+    }
+
+    .step-line:nth-child(2) .step-line-fill {
+      width: 100%;
+      background: var(--success-green);
+    }
+
+    .step-line:nth-child(4) .step-line-fill {
+      width: 50%;
+      animation: step-fill 1.5s ease-in-out infinite;
+    }
+
+    .step-line:nth-child(6) .step-line-fill {
+      width: 0%;
+    }
+
+    @keyframes step-pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(51, 154, 240, 0.7); }
+      50% { transform: scale(1.1); box-shadow: 0 0 0 5px rgba(51, 154, 240, 0); }
+    }
+
+    @keyframes step-fill {
+      0%, 100% { width: 0%; }
+      50% { width: 50%; }
+    }
+
+    /* Radial Progress */
+    .radial-progress {
+      width: 60px;
+      height: 60px;
+      position: relative;
+    }
+
+    .radial-progress-circle {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: #e9ecef;
+      stroke-width: 4;
+      transform: rotate(-90deg);
+      transform-origin: center;
+    }
+
+    .radial-progress-value {
+      stroke: var(--primary-blue);
+      stroke-dasharray: 170;
+      stroke-dashoffset: 170;
+      animation: radial-fill 2s ease-in-out infinite;
+    }
+
+    .radial-progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--primary-blue);
+      opacity: 0;
+      animation: progress-text 2s linear infinite;
+    }
+
+    @keyframes radial-fill {
+      0% { stroke-dashoffset: 170; }
+      50% { stroke-dashoffset: 50; }
+      100% { stroke-dashoffset: 170; }
+    }
+
+    @keyframes progress-text {
+      0% { opacity: 0; }
+      30%, 70% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* Pulse Echo */
+    .pulse-echo {
+      position: relative;
+      width: 60px;
+      height: 60px;
+    }
+
+    .pulse-echo-center {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--primary-blue);
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .pulse-echo-wave {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid var(--primary-blue);
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transform: scale(0);
+      animation: pulse-wave 2s ease-in-out infinite;
+    }
+
+    .pulse-echo-wave:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+
+    .pulse-echo-wave:nth-child(3) {
+      animation-delay: 1s;
+    }
+
+    @keyframes pulse-wave {
+      0% { opacity: 0.8; transform: scale(0.1); }
+      100% { opacity: 0; transform: scale(1); }
+    }
+
+    /* Liquid Fill */
+    .liquid-fill {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid var(--primary-blue);
+      overflow: hidden;
+    }
+
+    .liquid-fill-wave {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: 0;
+      left: -50%;
+      background: linear-gradient(transparent, var(--primary-blue));
+      animation: liquid-wave 2s ease infinite;
+    }
+
+    .liquid-fill-wave:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(255, 255, 255, 0.2);
+      animation: liquid-sparkle 2s ease infinite;
+    }
+
+    @keyframes liquid-wave {
+      0%, 100% { transform: translateY(75%) rotate(0deg); }
+      50% { transform: translateY(25%) rotate(180deg); }
+    }
+
+    @keyframes liquid-sparkle {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    /* Minimalist Spinner (already in styles.css) */
+
+    /* Breeze Spinner */
+    .breeze-spinner {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: conic-gradient(
+        transparent 0%,
+        transparent 10%,
+        var(--primary-light, #91c2f8) 35%,
+        var(--primary-blue) 65%,
+        transparent 85%,
+        transparent 100%
+      );
+      animation: breeze-spin 1.5s ease-in-out infinite;
+    }
+
+    .breeze-spinner:after {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    @keyframes breeze-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Dot Carousel */
+    .dot-carousel {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot-carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary-blue);
+      animation: dot-bounce 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+    }
+
+    .dot-carousel-dot:nth-child(1) { animation-delay: 0s; }
+    .dot-carousel-dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot-carousel-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dot-bounce {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
+      50% { transform: translateY(-12px) scale(1.2); opacity: 1; }
+    }
+
+    /* Interactive Dots */
+    .interactive-dots {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .interactive-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #e9ecef;
+      position: relative;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .interactive-dot.active {
+      background: var(--primary-blue);
+      transform: scale(1.5);
+    }
+
+    .interactive-dot:hover:not(.active) {
+      background: #adb5bd;
+      transform: scale(1.2);
+    }
+
+    /* Glowing Pulse */
+    .glowing-pulse {
+      width: 36px;
+      height: 36px;
+      background: var(--primary-blue);
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--primary-blue);
+      animation: glow-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { transform: scale(0.8); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    /* Logo Pulse for Branded Loaders */
+    .logo-pulse {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-pulse-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--primary-blue);
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+      animation: logo-pulse 1.5s ease-in-out infinite;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-pulse-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid var(--primary-blue);
+      opacity: 0;
+      transform: scale(0.8);
+      animation: logo-ring-pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes logo-pulse {
+      0%, 100% { transform: scale(0.9); }
+      50% { transform: scale(1); }
+    }
+
+    @keyframes logo-ring-pulse {
+      0% { opacity: 0.7; transform: scale(0.8); }
+      100% { opacity: 0; transform: scale(1.3); }
+    }
+
+    /* Brand Dots */
+    .brand-dots {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--primary-blue);
+    }
+
+    .brand-dot:nth-child(1) {
+      animation: brand-dot-pulse 1.5s ease-in-out infinite;
+    }
+
+    .brand-dot:nth-child(2) {
+      animation: brand-dot-pulse 1.5s ease-in-out infinite 0.2s;
+      background: var(--success-green);
+    }
+
+    .brand-dot:nth-child(3) {
+      animation: brand-dot-pulse 1.5s ease-in-out infinite 0.4s;
+      background: var(--accent-coral);
+    }
+
+    @keyframes brand-dot-pulse {
+      0%, 100% { transform: scale(0.8); opacity: 0.5; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="indicators-container">
+    <!-- Original Loaders Section -->
+    <div class="category-header">Original Loading Animations</div>
+    
+    <!-- 1. Emergent Pulse -->
+    <div class="loader-cell">
+      <div class="ep-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 2. Material Breathe -->
+    <div class="loader-cell">
+      <div class="mb-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 3. Fade Sequence -->
+    <div class="loader-cell">
+      <div class="fs-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="fs-dot"></div>
+        <div class="fs-dot"></div>
+        <div class="fs-dot"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 4. Gravitational Pulse -->
+    <div class="loader-cell">
+      <div class="gp-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 5. Liquid Flow -->
+    <div class="loader-cell">
+      <div class="lf-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="lf-wave"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 6. Constellation -->
+    <div class="loader-cell">
+      <div class="cs-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="cs-dot"></div>
+        <div class="cs-dot"></div>
+        <div class="cs-dot"></div>
+        <div class="cs-dot"></div>
+        <div class="cs-dot"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 7. Terrain Scanner -->
+    <div class="loader-cell">
+      <div class="ts-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="ts-terrain"></div>
+        <div class="ts-scanner"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 8. Quantum Fade -->
+    <div class="loader-cell">
+      <div class="qf-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="qf-particle"></div>
+        <div class="qf-particle"></div>
+        <div class="qf-particle"></div>
+        <div class="qf-particle"></div>
+        <div class="qf-particle"></div>
+        <div class="qf-particle"></div>
+        <div class="qf-particle"></div>
+        <div class="qf-particle"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 9. Paper Unfold -->
+    <div class="loader-cell">
+      <div class="pu-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="pu-fold"></div>
+        <div class="pu-fold"></div>
+        <div class="pu-fold"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 10. Harmonic Oscillation -->
+    <div class="loader-cell">
+      <div class="ho-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="ho-bar"></div>
+        <div class="ho-bar"></div>
+        <div class="ho-bar"></div>
+        <div class="ho-bar"></div>
+        <div class="ho-bar"></div>
+        <div class="ho-bar"></div>
+        <div class="ho-bar"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 11. Linear Progress -->
+    <div class="loader-cell">
+      <div class="lp-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="lp-bar"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 12. Minimalist Spinner -->
+    <div class="loader-cell">
+      <div class="ms-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 13. Circular Dash -->
+    <div class="loader-cell">
+      <div class="cd-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 14. Optical Illusion -->
+    <div class="loader-cell">
+      <div class="oi-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="oi-ring"></div>
+        <div class="oi-ring"></div>
+        <div class="oi-ring"></div>
+        <div class="oi-ring"></div>
+        <div class="oi-ring"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 15. Ink Drop -->
+    <div class="loader-cell">
+      <div class="id-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="id-drop"></div>
+        <div class="id-drop"></div>
+        <div class="id-drop"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 16. Minimal Heart -->
+    <div class="loader-cell">
+      <div class="mh-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="mh-heart"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 17. Perfect Circle -->
+    <div class="loader-cell">
+      <div class="pc-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="pc-circle"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 18. Zen Minimalism -->
+    <div class="loader-cell">
+      <div class="zm-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="zm-line"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 19. Think Different -->
+    <div class="loader-cell">
+      <div class="td-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="td-text">think</div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 20. Intuitive Flow -->
+    <div class="loader-cell">
+      <div class="if-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="if-droplet"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- Skeleton & Progress Loaders Section -->
+    <div class="category-header">Skeleton & Progress Loaders</div>
+    
+    <!-- Skeleton Card -->
+    <div class="loader-cell">
+      <div class="skeleton-card" role="status" aria-live="polite" aria-label="Loading content…">
+        <div class="skeleton-image"></div>
+        <div class="skeleton-content">
+          <div class="skeleton-title"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text"></div>
+        </div>
+        <span class="sr-only">Loading content</span>
+      </div>
+    </div>
+
+    <!-- Skeleton Profile -->
+    <div class="loader-cell">
+      <div class="skeleton-profile" role="status" aria-live="polite" aria-label="Loading profile…">
+        <div class="skeleton-avatar"></div>
+        <div class="skeleton-profile-content">
+          <div class="skeleton-name"></div>
+          <div class="skeleton-info"></div>
+        </div>
+        <span class="sr-only">Loading profile</span>
+      </div>
+    </div>
+
+    <!-- Elegant Progress Bar -->
+    <div class="loader-cell">
+      <div class="elegant-progress" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="elegant-progress-bar"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- Step Progress -->
+    <div class="loader-cell">
+      <div class="step-progress" role="status" aria-live="polite" aria-label="Step 2 of 4 in progress…">
+        <div class="step-circle step-completed"></div>
+        <div class="step-line"><div class="step-line-fill"></div></div>
+        <div class="step-circle step-active"></div>
+        <div class="step-line"><div class="step-line-fill"></div></div>
+        <div class="step-circle"></div>
+        <div class="step-line"><div class="step-line-fill"></div></div>
+        <div class="step-circle"></div>
+        <span class="sr-only">Step 2 of 4 in progress</span>
+      </div>
+    </div>
+
+    <!-- Radial Progress -->
+    <div class="loader-cell">
+      <div class="radial-progress" role="status" aria-live="polite" aria-label="Loading…">
+        <svg class="radial-progress-circle">
+          <circle cx="30" cy="30" r="27"></circle>
+          <circle class="radial-progress-value" cx="30" cy="30" r="27"></circle>
+        </svg>
+        <div class="radial-progress-text">63%</div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- Effect Loaders Section -->
+    <div class="category-header">Effect Loaders</div>
+    
+    <!-- Pulse Echo -->
+    <div class="loader-cell">
+      <div class="pulse-echo" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="pulse-echo-wave"></div>
+        <div class="pulse-echo-wave"></div>
+        <div class="pulse-echo-wave"></div>
+        <div class="pulse-echo-center"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- Liquid Fill -->
+    <div class="loader-cell">
+      <div class="liquid-fill" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="liquid-fill-wave"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- Breeze Spinner -->
+    <div class="loader-cell">
+      <div class="breeze-spinner" role="status" aria-live="polite" aria-label="Loading…">
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- Dot Carousel -->
+    <div class="loader-cell">
+      <div class="dot-carousel" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="dot-carousel-dot"></div>
+        <div class="dot-carousel-dot"></div>
+        <div class="dot-carousel-dot"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- Interactive Dots -->
+    <div class="loader-cell">
+      <div class="interactive-dots">
+        <div class="interactive-dot"></div>
+        <div class="interactive-dot active"></div>
+        <div class="interactive-dot"></div>
+        <div class="interactive-dot"></div>
+      </div>
+    </div>
+
+    <!-- Glowing Pulse -->
+    <div class="loader-cell">
+      <div class="glowing-pulse" role="status" aria-live="polite" aria-label="Loading…">
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- Branded Loaders Section -->
+    <div class="category-header">Branded Loaders</div>
+    
+    <!-- Logo Pulse -->
+    <div class="loader-cell">
+      <div class="logo-pulse" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="logo-pulse-ring"></div>
+        <div class="logo-pulse-icon"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- Brand Dots -->
+    <div class="loader-cell">
+      <div class="brand-dots" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="brand-dot"></div>
+        <div class="brand-dot"></div>
+        <div class="brand-dot"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 21. One More Thing -->
+    <div class="loader-cell">
+      <div class="omt-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="omt-reveal"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 22. Innovation Bridge -->
+    <div class="loader-cell">
+      <div class="ib-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="ib-arc"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 23. Focus Essence -->
+    <div class="loader-cell">
+      <div class="fe-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="fe-square"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 24. Thousand No's -->
+    <div class="loader-cell">
+      <div class="tn-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="tn-circle"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 25. Insanely Great -->
+    <div class="loader-cell">
+      <div class="ig-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="ig-pixel"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 26. Connection Point -->
+    <div class="loader-cell">
+      <div class="cp-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="cp-dot"></div>
+        <div class="cp-line"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 27. Simplicity Scale -->
+    <div class="loader-cell">
+      <div class="ss-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="ss-bar"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 28. Courage Dash -->
+    <div class="loader-cell">
+      <div class="cou-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="cou-path"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 29. Meta Connect -->
+    <div class="loader-cell">
+      <div class="mc-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="mc-node"></div>
+        <div class="mc-node"></div>
+        <div class="mc-node"></div>
+        <div class="mc-connection"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 30. Data Flow -->
+    <div class="loader-cell">
+      <div class="df-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="df-stream"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 31. Neural Network -->
+    <div class="loader-cell">
+      <div class="nn-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="nn-node"></div>
+        <div class="nn-node"></div>
+        <div class="nn-node"></div>
+        <div class="nn-node"></div>
+        <div class="nn-node"></div>
+        <div class="nn-connection"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 32. Reality Bridge -->
+    <div class="loader-cell">
+      <div class="rb-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="rb-world"></div>
+        <div class="rb-world"></div>
+        <div class="rb-bridge"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 33. Reality Distortion -->
+    <div class="loader-cell">
+      <div class="rd-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="rd-field"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 34. One More Thing -->
+    <div class="loader-cell">
+      <div class="one-more-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="one-more-text">Loading...</div>
+        <div class="one-more-text">Almost...</div>
+        <div class="one-more-text">One more...</div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 35. Thousand No's -->
+    <div class="loader-cell">
+      <div class="thousand-nos-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="no-circle"></div>
+        <div class="no-circle"></div>
+        <div class="no-circle"></div>
+        <div class="no-circle"></div>
+        <div class="no-circle"></div>
+        <div class="no-circle"></div>
+        <div class="no-circle"></div>
+        <div class="no-circle"></div>
+        <div class="no-circle"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 36. Courage Loop -->
+    <div class="loader-cell">
+      <div class="courage-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="courage-ring"></div>
+        <div class="courage-ring"></div>
+        <div class="courage-ring"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 37. Think Loading -->
+    <div class="loader-cell">
+      <div class="think-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="think-text">think</div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 38. Innovation Ripple -->
+    <div class="loader-cell">
+      <div class="innovation-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="innovation-circle"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 39. Apple Classic -->
+    <div class="loader-cell">
+      <div class="apple-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="apple-rainbow"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+
+    <!-- 40. Magical Reveal -->
+    <div class="loader-cell">
+      <div class="magical-loader" role="status" aria-live="polite" aria-label="Loading…">
+        <div class="magical-side"></div>
+        <div class="magical-side"></div>
+        <span class="sr-only">Loading</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Add interactivity for the interactive dots component
+    document.addEventListener('DOMContentLoaded', function() {
+      const dots = document.querySelectorAll('.interactive-dot');
+      dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+          dots.forEach(d => d.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

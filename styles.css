@@ -1,0 +1,1599 @@
+/* -------- Reset and Base Styles -------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.indicators-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 50px;
+  padding: 40px;
+}
+
+.loader-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 120px;
+  min-width: 120px;
+}
+
+/* -------- Design System Tokens -------- */
+:root {
+  /* Colors */
+  --primary-blue: hsl(211, 100%, 50%);
+  --accent-coral: hsl(4, 100%, 67%);
+  --accent-purple: hsl(264, 100%, 61%);
+  --neutral-gray: hsl(0, 0%, 25%);
+  --success-green: hsl(145, 100%, 39%);
+  --ambient-yellow: hsl(48, 100%, 67%);
+  --subtle-slate: hsla(210, 20%, 90%, 0.8);
+  --deep-teal: hsl(174, 100%, 29%);
+  --gold: hsl(42, 100%, 50%);
+  --rose: hsl(335, 100%, 65%);
+  --soft-blue: hsl(210, 60%, 85%);
+  --silver: hsl(240, 10%, 90%);
+  --carbon-black: hsl(0, 0%, 15%);
+  --neon-green: hsl(120, 100%, 60%);
+  --apple-white: hsl(0, 0%, 97%);
+  --innovation-orange: hsl(25, 100%, 50%);
+  
+  /* Sizing */
+  --base-size: 40px;
+  --tiny: calc(var(--base-size) * 0.25);
+  --small: calc(var(--base-size) * 0.5);
+  --large: calc(var(--base-size) * 1.5);
+  --xlarge: calc(var(--base-size) * 3);
+  
+  /* Timing */
+  --quick: 0.8s;
+  --medium: 1.2s;
+  --slow: 2.4s;
+  
+  /* Motion */
+  --ease-natural: cubic-bezier(.22, .61, .36, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-precise: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1.0);
+}
+
+/* -------- Accessibility -------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* -------- 1. Emergent Pulse -------- */
+.ep-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  border-radius: 50%;
+  background: var(--primary-blue);
+  transform-origin: 50% 50%;
+  animation: ep-pulse var(--medium) var(--ease-natural) infinite;
+}
+
+@keyframes ep-pulse {
+  0%   { transform: scale(.2); opacity: 0; box-shadow: 0 0 0 0 var(--primary-blue);}
+  50%  { transform: scale(1); opacity: 0.9; box-shadow: 0 0 0 calc(var(--base-size)*.5) color-mix(in srgb, var(--primary-blue) 25%, transparent);}
+  100% { transform: scale(.2); opacity: 0; box-shadow: 0 0 0 calc(var(--base-size)*1) color-mix(in srgb, var(--primary-blue) 0%, transparent);}
+}
+
+/* -------- 2. Material Breathe -------- */
+.mb-loader {
+  position: relative;
+  width: var(--base-size);
+  height: var(--base-size);
+}
+
+.mb-loader::before,
+.mb-loader::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  inset: 0;
+  background: var(--accent-coral);
+  opacity: 0.8;
+}
+
+.mb-loader::before {
+  animation: mb-breathe var(--slow) var(--ease-natural) infinite;
+}
+
+.mb-loader::after {
+  animation: mb-breathe var(--slow) var(--ease-natural) infinite calc(var(--slow) * 0.5);
+}
+
+@keyframes mb-breathe {
+  0%   { transform: scale(0.6); opacity: 0.2; }
+  50%  { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(0.6); opacity: 0.2; }
+}
+
+/* -------- 3. Fade Sequence -------- */
+.fs-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.fs-dot {
+  width: calc(var(--base-size) / 4);
+  height: calc(var(--base-size) / 4);
+  border-radius: 50%;
+  background: var(--neutral-gray);
+}
+
+.fs-dot:nth-child(1) { animation: fs-fade 1.5s ease-in-out infinite; }
+.fs-dot:nth-child(2) { animation: fs-fade 1.5s ease-in-out infinite 0.2s; }
+.fs-dot:nth-child(3) { animation: fs-fade 1.5s ease-in-out infinite 0.4s; }
+
+@keyframes fs-fade {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* -------- 4. Linear Progress -------- */
+.lp-loader {
+  width: calc(var(--base-size) * 3);
+  height: calc(var(--base-size) / 8);
+  background: var(--subtle-slate);
+  border-radius: calc(var(--base-size) / 16);
+  overflow: hidden;
+}
+
+.lp-bar {
+  height: 100%;
+  width: 30%;
+  background: var(--success-green);
+  border-radius: calc(var(--base-size) / 16);
+  animation: lp-progress 2s var(--ease-natural) infinite;
+}
+
+@keyframes lp-progress {
+  0% { transform: translateX(-100%); }
+  50%, 100% { transform: translateX(300%); }
+}
+
+/* -------- 5. Minimalist Spinner -------- */
+.ms-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  border-radius: 50%;
+  border: calc(var(--base-size) / 16) solid rgba(0,0,0,0.05);
+  border-top-color: var(--primary-blue);
+  animation: ms-spin 1s linear infinite;
+}
+
+@keyframes ms-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* -------- 6. Gravitational Pulse -------- */
+.gp-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  background-color: var(--deep-teal);
+  border-radius: 50%;
+  animation: gravitational-pulse var(--medium) var(--ease-precise) infinite alternate;
+}
+
+@keyframes gravitational-pulse {
+  0% {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+
+/* -------- 7. Liquid Flow -------- */
+.lf-loader {
+  width: var(--xlarge);
+  height: var(--small);
+  background: var(--subtle-slate);
+  border-radius: var(--tiny);
+  overflow: hidden;
+  position: relative;
+}
+
+.lf-wave {
+  position: absolute;
+  height: 100%;
+  width: 200%;
+  background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
+  animation: liquid-flow var(--slow) var(--ease-natural) infinite;
+  transform-origin: center;
+}
+
+@keyframes liquid-flow {
+  0% { transform: translateX(-50%); width: 50%; }
+  50% { width: 80%; }
+  100% { transform: translateX(100%); width: 50%; }
+}
+
+/* -------- 8. Constellation -------- */
+.cs-loader {
+  position: relative;
+  width: var(--xlarge);
+  height: var(--large);
+}
+
+.cs-dot {
+  position: absolute;
+  width: var(--tiny);
+  height: var(--tiny);
+  border-radius: 50%;
+  background: var(--accent-purple);
+}
+
+.cs-dot:nth-child(1) {
+  top: 0;
+  left: 20%;
+  animation: constellation 2.2s var(--ease-natural) infinite;
+}
+
+.cs-dot:nth-child(2) {
+  bottom: 30%;
+  left: 0;
+  animation: constellation 2.2s var(--ease-natural) infinite 0.5s;
+}
+
+.cs-dot:nth-child(3) {
+  bottom: 0;
+  right: 20%;
+  animation: constellation 2.2s var(--ease-natural) infinite 0.7s;
+}
+
+.cs-dot:nth-child(4) {
+  top: 30%;
+  right: 0;
+  animation: constellation 2.2s var(--ease-natural) infinite 0.2s;
+}
+
+.cs-dot:nth-child(5) {
+  top: 40%;
+  left: 40%;
+  animation: constellation 2.2s var(--ease-natural) infinite 0.9s;
+}
+
+.cs-loader:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.01) 0%, var(--accent-purple) 80%, rgba(255,255,255,0.01) 100%);
+  opacity: 0.05;
+  filter: blur(5px);
+  border-radius: 40%;
+  animation: constellation-glow 4s linear infinite;
+}
+
+@keyframes constellation {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.5); opacity: 1; }
+}
+
+@keyframes constellation-glow {
+  0% { transform: rotate(0deg) scale(0.8); }
+  100% { transform: rotate(360deg) scale(1.2); }
+}
+
+/* -------- 9. Terrain Scanner -------- */
+.ts-loader {
+  width: var(--xlarge);
+  height: var(--small);
+  background: var(--subtle-slate);
+  border-radius: var(--tiny);
+  position: relative;
+  overflow: hidden;
+}
+
+.ts-scanner {
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background: var(--ambient-yellow);
+  box-shadow: 0 0 10px 2px var(--ambient-yellow);
+  animation: terrain-scan var(--medium) var(--ease-natural) infinite;
+}
+
+.ts-terrain {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    var(--subtle-slate) 10%, 
+    color-mix(in srgb, var(--subtle-slate) 85%, var(--ambient-yellow)) 15%,
+    var(--subtle-slate) 20%,
+    var(--subtle-slate) 30%, 
+    color-mix(in srgb, var(--subtle-slate) 85%, var(--ambient-yellow)) 35%,
+    var(--subtle-slate) 40%,
+    color-mix(in srgb, var(--subtle-slate) 85%, var(--ambient-yellow)) 60%,
+    var(--subtle-slate) 70%,
+    var(--subtle-slate) 80%,
+    color-mix(in srgb, var(--subtle-slate) 85%, var(--ambient-yellow)) 90%,
+    var(--subtle-slate) 95%
+  );
+  opacity: 0.4;
+}
+
+@keyframes terrain-scan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(var(--xlarge)); }
+}
+
+/* -------- 10. Quantum Fade -------- */
+.qf-loader {
+  position: relative;
+  width: var(--large);
+  height: var(--large);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qf-particle {
+  position: absolute;
+  width: calc(var(--tiny) * 1.5);
+  height: calc(var(--tiny) * 1.5);
+  border-radius: 50%;
+  background: var(--primary-blue);
+}
+
+.qf-loader .qf-particle:nth-child(1) { transform: translate(var(--small), var(--small)); animation: quantum-fade 2s infinite 0.1s; }
+.qf-loader .qf-particle:nth-child(2) { transform: translate(var(--small), calc(var(--small) * -1)); animation: quantum-fade 2s infinite 0.3s; }
+.qf-loader .qf-particle:nth-child(3) { transform: translate(calc(var(--small) * -1), var(--small)); animation: quantum-fade 2s infinite 0.5s; }
+.qf-loader .qf-particle:nth-child(4) { transform: translate(calc(var(--small) * -1), calc(var(--small) * -1)); animation: quantum-fade 2s infinite 0.7s; }
+.qf-loader .qf-particle:nth-child(5) { transform: translate(0, var(--small)); animation: quantum-fade 2s infinite 0.2s; }
+.qf-loader .qf-particle:nth-child(6) { transform: translate(var(--small), 0); animation: quantum-fade 2s infinite 0.4s; }
+.qf-loader .qf-particle:nth-child(7) { transform: translate(0, calc(var(--small) * -1)); animation: quantum-fade 2s infinite 0.6s; }
+.qf-loader .qf-particle:nth-child(8) { transform: translate(calc(var(--small) * -1), 0); animation: quantum-fade 2s infinite 0.8s; }
+
+@keyframes quantum-fade {
+  0%, 100% { opacity: 0.2; transform: translate(var(--x), var(--y)) scale(0.5); }
+  50% { opacity: 1; transform: translate(var(--x), var(--y)) scale(1.2); }
+}
+
+/* -------- 11. Paper Unfold -------- */
+.pu-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+  perspective: 150px;
+}
+
+.pu-fold {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--subtle-slate);
+  transform-origin: bottom;
+  animation: paper-unfold var(--slow) var(--ease-bounce) infinite;
+}
+
+.pu-fold:nth-child(1) {
+  animation-delay: 0s;
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+.pu-fold:nth-child(2) {
+  animation-delay: 0.2s;
+  clip-path: polygon(0 33%, 100% 33%, 100% 66%, 0 66%);
+}
+
+.pu-fold:nth-child(3) {
+  animation-delay: 0.4s;
+  clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%);
+}
+
+@keyframes paper-unfold {
+  0%, 100% { transform: rotateX(90deg); opacity: 0.5; }
+  50% { transform: rotateX(0deg); opacity: 1; }
+}
+
+/* -------- 12. Harmonic Oscillation -------- */
+.ho-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--xlarge);
+  height: var(--base-size);
+}
+
+.ho-bar {
+  width: var(--tiny);
+  height: var(--small);
+  background: var(--deep-teal);
+  margin: 0 1px;
+  border-radius: var(--tiny);
+}
+
+.ho-bar:nth-child(1) { animation: harmonic-oscillate var(--medium) ease-in-out infinite; }
+.ho-bar:nth-child(2) { animation: harmonic-oscillate var(--medium) ease-in-out infinite 0.1s; }
+.ho-bar:nth-child(3) { animation: harmonic-oscillate var(--medium) ease-in-out infinite 0.2s; }
+.ho-bar:nth-child(4) { animation: harmonic-oscillate var(--medium) ease-in-out infinite 0.3s; }
+.ho-bar:nth-child(5) { animation: harmonic-oscillate var(--medium) ease-in-out infinite 0.4s; }
+.ho-bar:nth-child(6) { animation: harmonic-oscillate var(--medium) ease-in-out infinite 0.5s; }
+.ho-bar:nth-child(7) { animation: harmonic-oscillate var(--medium) ease-in-out infinite 0.6s; }
+
+@keyframes harmonic-oscillate {
+  0%, 100% { transform: scaleY(0.3); opacity: 0.2; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+/* -------- 13. Circular Dash -------- */
+.cd-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid var(--subtle-slate);
+  position: relative;
+  overflow: hidden;
+}
+
+.cd-loader:before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--gold);
+  border-right-color: var(--gold);
+  animation: circular-dash var(--medium) var(--ease-apple) infinite;
+}
+
+@keyframes circular-dash {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* -------- 14. Optical Illusion -------- */
+.oi-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+}
+
+.oi-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.oi-ring:nth-child(1) {
+  inset: 0;
+  border: 1px solid var(--soft-blue);
+  animation: oi-rotate var(--slow) linear infinite;
+}
+
+.oi-ring:nth-child(2) {
+  inset: 5px;
+  border: 1px solid var(--primary-blue);
+  animation: oi-rotate var(--slow) linear infinite reverse;
+}
+
+.oi-ring:nth-child(3) {
+  inset: 10px;
+  border: 1px solid var(--soft-blue);
+  animation: oi-rotate calc(var(--slow) * 0.8) linear infinite;
+}
+
+.oi-ring:nth-child(4) {
+  inset: 15px;
+  border: 1px solid var(--primary-blue);
+  animation: oi-rotate calc(var(--slow) * 0.8) linear infinite reverse;
+}
+
+.oi-ring:nth-child(5) {
+  inset: 20px;
+  background: var(--primary-blue);
+  opacity: 0.3;
+  animation: optical-pulse var(--medium) var(--ease-natural) infinite alternate;
+}
+
+@keyframes oi-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes optical-pulse {
+  0% { opacity: 0.2; transform: scale(0.9); }
+  100% { opacity: 0.5; transform: scale(1); }
+}
+
+/* -------- 15. Ink Drop -------- */
+.id-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--subtle-slate);
+  overflow: hidden;
+}
+
+.id-drop {
+  position: absolute;
+  width: calc(var(--tiny) * 2);
+  height: calc(var(--tiny) * 2);
+  border-radius: 50%;
+  background: var(--rose);
+  transform-origin: center;
+}
+
+.id-drop:nth-child(1) {
+  animation: ink-spread var(--slow) var(--ease-natural) infinite 0s;
+}
+
+.id-drop:nth-child(2) {
+  animation: ink-spread var(--slow) var(--ease-natural) infinite 1s;
+}
+
+.id-drop:nth-child(3) {
+  animation: ink-spread var(--slow) var(--ease-natural) infinite 2s;
+}
+
+@keyframes ink-spread {
+  0% { 
+    transform: scale(0); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: scale(10); 
+    opacity: 0; 
+  }
+}
+
+/* -------- 16. Minimal Heart -------- */
+.mh-loader {
+  position: relative;
+  width: var(--base-size);
+  height: var(--base-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mh-heart {
+  position: relative;
+  width: calc(var(--base-size) * 0.8);
+  height: calc(var(--base-size) * 0.8);
+  background: var(--accent-coral);
+  transform: rotate(45deg);
+  animation: heart-beat var(--medium) var(--ease-bounce) infinite alternate;
+}
+
+.mh-heart:before,
+.mh-heart:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-coral);
+  border-radius: 50%;
+}
+
+.mh-heart:before {
+  top: -50%;
+  left: 0;
+}
+
+.mh-heart:after {
+  top: 0;
+  left: -50%;
+}
+
+@keyframes heart-beat {
+  0% { transform: rotate(45deg) scale(0.8); opacity: 0.7; }
+  100% { transform: rotate(45deg) scale(1); opacity: 1; }
+}
+
+/* -------- 17. Perfect Circle -------- */
+.pc-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.pc-circle {
+  position: absolute;
+  width: calc(var(--base-size) * 0.4);
+  height: calc(var(--base-size) * 0.4);
+  border-radius: 50%;
+  background-color: var(--subtle-slate);
+  animation: perfect-circle var(--slow) var(--ease-precise) infinite;
+}
+
+@keyframes perfect-circle {
+  0%, 100% {
+    width: calc(var(--base-size) * 0.4);
+    height: calc(var(--base-size) * 0.4);
+    background-color: var(--subtle-slate);
+  }
+  50% {
+    width: calc(var(--base-size) * 0.95);
+    height: calc(var(--base-size) * 0.95);
+    background-color: var(--primary-blue);
+  }
+}
+
+/* -------- 18. Zen Minimalism -------- */
+.zm-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.zm-line {
+  width: calc(var(--base-size) * 0.6);
+  height: 1px;
+  background-color: var(--neutral-gray);
+  position: relative;
+  overflow: hidden;
+}
+
+.zm-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-blue);
+  transform: translateX(-100%);
+  animation: zen-minimalism var(--medium) var(--ease-natural) infinite;
+}
+
+@keyframes zen-minimalism {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* -------- 19. Think Different -------- */
+.td-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.td-text {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: var(--neutral-gray);
+  opacity: 0.8;
+  animation: think-different var(--slow) var(--ease-natural) infinite;
+}
+
+@keyframes think-different {
+  0%, 100% {
+    opacity: 0.2;
+    letter-spacing: 1px;
+    color: var(--neutral-gray);
+  }
+  50% {
+    opacity: 1;
+    letter-spacing: 3px;
+    color: var(--primary-blue);
+  }
+}
+
+/* -------- 20. Intuitive Flow -------- */
+.if-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.if-droplet {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: 0;
+  left: -50%;
+  background: radial-gradient(
+    ellipse at center,
+    var(--primary-blue) 0%,
+    transparent 65%
+  );
+  opacity: 0;
+  animation: intuitive-flow var(--slow) var(--ease-precise) infinite;
+}
+
+@keyframes intuitive-flow {
+  0% { transform: translateY(-75%) scale(0.5); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(50%) scale(1); opacity: 0; }
+}
+
+/* -------- 21. One More Thing -------- */
+.omt-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.omt-reveal {
+  width: calc(var(--base-size) * 0.8);
+  height: calc(var(--base-size) * 0.1);
+  background-color: var(--subtle-slate);
+  position: relative;
+  overflow: hidden;
+}
+
+.omt-reveal::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--accent-purple);
+  animation: one-more-thing var(--medium) var(--ease-bounce) infinite;
+}
+
+@keyframes one-more-thing {
+  0%, 30% { transform: translateX(-100%); }
+  60%, 65% { transform: translateX(0); }
+  95%, 100% { transform: translateX(100%); }
+}
+
+/* -------- 22. Innovation Bridge -------- */
+.ib-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+}
+
+.ib-arc {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  bottom: 0;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  border-top: 2px solid var(--subtle-slate);
+  border-left: 2px solid var(--subtle-slate);
+  border-right: 2px solid var(--subtle-slate);
+  box-sizing: border-box;
+  animation: innovation-bridge var(--medium) var(--ease-natural) infinite alternate;
+}
+
+@keyframes innovation-bridge {
+  0% {
+    opacity: 0.3;
+    border-top: 2px solid var(--subtle-slate);
+    border-left: 2px solid var(--subtle-slate);
+    border-right: 2px solid var(--subtle-slate);
+    transform: rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    border-top: 2px solid var(--primary-blue);
+    border-left: 2px solid var(--gold);
+    border-right: 2px solid var(--accent-coral);
+    transform: rotate(180deg);
+  }
+}
+
+/* -------- 23. Focus Essence -------- */
+.fe-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.fe-square {
+  width: calc(var(--base-size) * 0.4);
+  height: calc(var(--base-size) * 0.4);
+  background-color: var(--subtle-slate);
+  position: relative;
+  animation: focus-essence var(--medium) var(--ease-precise) infinite;
+}
+
+@keyframes focus-essence {
+  0%, 100% {
+    transform: scale(1);
+    background-color: var(--subtle-slate);
+  }
+  50% {
+    transform: scale(0.5);
+    background-color: var(--primary-blue);
+  }
+}
+
+/* -------- 24. Thousand No's -------- */
+.tn-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.tn-circle {
+  width: calc(var(--base-size) * 0.8);
+  height: calc(var(--base-size) * 0.8);
+  border: 1px solid var(--subtle-slate);
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.tn-circle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 0%, var(--primary-blue) 100%);
+  opacity: 0;
+  animation: thousand-nos var(--medium) var(--ease-apple) infinite;
+}
+
+@keyframes thousand-nos {
+  0%, 10% { opacity: 0; transform: scale(0); }
+  50% { opacity: 0.2; transform: scale(0.5); }
+  90%, 100% { opacity: 0; transform: scale(1); }
+}
+
+/* -------- 25. Insanely Great -------- */
+.ig-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ig-pixel {
+  width: 1px;
+  height: 1px;
+  background-color: var(--primary-blue);
+  position: relative;
+  animation: insanely-great var(--slow) var(--ease-natural) infinite;
+}
+
+@keyframes insanely-great {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 0 var(--primary-blue),
+      0 0 0 0 var(--primary-blue),
+      0 0 0 0 var(--primary-blue),
+      0 0 0 0 var(--primary-blue);
+  }
+  50% {
+    transform: scale(3);
+    box-shadow:
+      calc(var(--base-size) * 0.2) calc(var(--base-size) * 0.2) 0 0 var(--accent-coral),
+      calc(var(--base-size) * -0.2) calc(var(--base-size) * 0.2) 0 0 var(--gold),
+      calc(var(--base-size) * 0.2) calc(var(--base-size) * -0.2) 0 0 var(--deep-teal),
+      calc(var(--base-size) * -0.2) calc(var(--base-size) * -0.2) 0 0 var(--accent-purple);
+  }
+}
+
+/* -------- 26. Connection Point -------- */
+.cp-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+}
+
+.cp-dot {
+  position: absolute;
+  width: var(--tiny);
+  height: var(--tiny);
+  border-radius: 50%;
+  background-color: var(--primary-blue);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.cp-line {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  top: 50%;
+  left: 50%;
+  background-color: var(--subtle-slate);
+  animation: connection-point var(--medium) var(--ease-precise) infinite;
+}
+
+@keyframes connection-point {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  25% {
+    width: calc(var(--base-size) * 0.8);
+    height: 1px;
+    opacity: 1;
+    transform: translateX(calc(var(--base-size) * -0.4));
+  }
+  50% {
+    width: 1px;
+    height: calc(var(--base-size) * 0.8);
+    transform: translate(0, calc(var(--base-size) * -0.4));
+  }
+  75% {
+    width: calc(var(--base-size) * 0.8);
+    height: 1px;
+    transform: translateX(calc(var(--base-size) * -0.4));
+  }
+  100% {
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+}
+
+/* -------- 27. Simplicity Scale -------- */
+.ss-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ss-bar {
+  width: calc(var(--base-size) * 0.7);
+  height: 1px;
+  background-color: var(--subtle-slate);
+  position: relative;
+  overflow: hidden;
+}
+
+.ss-bar::after {
+  content: '';
+  position: absolute;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
+  animation: simplicity-scale var(--medium) var(--ease-natural) infinite;
+}
+
+@keyframes simplicity-scale {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+
+/* -------- 28. Courage Dash -------- */
+.cou-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.cou-path {
+  width: calc(var(--base-size) * 0.8);
+  height: calc(var(--base-size) * 0.8);
+  border: 1px solid var(--subtle-slate);
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cou-path::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 45%, var(--accent-coral) 50%, transparent 55%);
+  animation: courage-dash var(--medium) var(--ease-bounce) infinite;
+}
+
+@keyframes courage-dash {
+  0% { transform: scale(0.5) rotate(0deg); opacity: 0; }
+  50% { transform: scale(1) rotate(180deg); opacity: 1; }
+  100% { transform: scale(0.5) rotate(360deg); opacity: 0; }
+}
+
+/* -------- 29. Meta Connect -------- */
+.mc-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mc-node {
+  position: absolute;
+  width: calc(var(--tiny) * 2);
+  height: calc(var(--tiny) * 2);
+  background-color: var(--primary-blue);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.mc-node:nth-child(1) {
+  transform: translate(calc(var(--small) * -0.8), calc(var(--small) * -0.8));
+  animation: mc-pulse-1 var(--medium) var(--ease-natural) infinite alternate;
+}
+
+.mc-node:nth-child(2) {
+  transform: translate(calc(var(--small) * 0.8), calc(var(--small) * 0.8));
+  animation: mc-pulse-2 var(--medium) var(--ease-natural) infinite alternate 0.2s;
+}
+
+.mc-node:nth-child(3) {
+  transform: translate(calc(var(--small) * 0.8), calc(var(--small) * -0.8));
+  animation: mc-pulse-3 var(--medium) var(--ease-natural) infinite alternate 0.4s;
+}
+
+.mc-connection {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px dashed var(--soft-blue);
+  opacity: 0.4;
+  animation: mc-rotate var(--slow) linear infinite;
+}
+
+@keyframes mc-pulse-1 {
+  0% { transform: translate(calc(var(--small) * -0.8), calc(var(--small) * -0.8)) scale(0.8); background-color: var(--primary-blue); }
+  100% { transform: translate(calc(var(--small) * -0.8), calc(var(--small) * -0.8)) scale(1.2); background-color: var(--accent-purple); }
+}
+
+@keyframes mc-pulse-2 {
+  0% { transform: translate(calc(var(--small) * 0.8), calc(var(--small) * 0.8)) scale(0.8); background-color: var(--primary-blue); }
+  100% { transform: translate(calc(var(--small) * 0.8), calc(var(--small) * 0.8)) scale(1.2); background-color: var(--accent-purple); }
+}
+
+@keyframes mc-pulse-3 {
+  0% { transform: translate(calc(var(--small) * 0.8), calc(var(--small) * -0.8)) scale(0.8); background-color: var(--primary-blue); }
+  100% { transform: translate(calc(var(--small) * 0.8), calc(var(--small) * -0.8)) scale(1.2); background-color: var(--accent-purple); }
+}
+
+@keyframes mc-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* -------- 30. Data Flow -------- */
+.df-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px solid var(--subtle-slate);
+}
+
+.df-stream {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 5px,
+    var(--primary-blue) 5px,
+    var(--primary-blue) 10px
+  );
+  opacity: 0.3;
+  animation: df-flow var(--medium) linear infinite;
+}
+
+@keyframes df-flow {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* -------- 31. Neural Network -------- */
+.nn-loader {
+  width: var(--xlarge);
+  height: var(--large);
+  position: relative;
+}
+
+.nn-node {
+  position: absolute;
+  width: var(--tiny);
+  height: var(--tiny);
+  background: var(--primary-blue);
+  border-radius: 50%;
+}
+
+.nn-node:nth-child(1) {
+  top: 20%;
+  left: 20%;
+  animation: nn-pulse var(--medium) var(--ease-bounce) infinite;
+}
+
+.nn-node:nth-child(2) {
+  top: 70%;
+  left: 30%;
+  animation: nn-pulse var(--medium) var(--ease-bounce) infinite 0.2s;
+}
+
+.nn-node:nth-child(3) {
+  top: 40%;
+  left: 50%;
+  animation: nn-pulse var(--medium) var(--ease-bounce) infinite 0.4s;
+}
+
+.nn-node:nth-child(4) {
+  top: 20%;
+  left: 70%;
+  animation: nn-pulse var(--medium) var(--ease-bounce) infinite 0.6s;
+}
+
+.nn-node:nth-child(5) {
+  top: 70%;
+  left: 80%;
+  animation: nn-pulse var(--medium) var(--ease-bounce) infinite 0.8s;
+}
+
+.nn-connection {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.nn-connection::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: 
+    radial-gradient(circle at 20% 20%, transparent 9.9%, var(--primary-blue) 10%, transparent 10.1%),
+    radial-gradient(circle at 70% 30%, transparent 9.9%, var(--primary-blue) 10%, transparent 10.1%),
+    radial-gradient(circle at 40% 50%, transparent 9.9%, var(--primary-blue) 10%, transparent 10.1%),
+    radial-gradient(circle at 20% 70%, transparent 9.9%, var(--primary-blue) 10%, transparent 10.1%),
+    radial-gradient(circle at 70% 80%, transparent 9.9%, var(--primary-blue) 10%, transparent 10.1%);
+  -webkit-mask-image: linear-gradient(45deg, #000 25%, rgba(0,0,0,0.5) 50%, transparent 75%);
+  mask-image: linear-gradient(45deg, #000 25%, rgba(0,0,0,0.5) 50%, transparent 75%);
+  opacity: 0.1;
+  animation: nn-flow var(--medium) var(--ease-natural) infinite alternate;
+}
+
+@keyframes nn-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.5); opacity: 0.8; }
+}
+
+@keyframes nn-flow {
+  0% { opacity: 0.1; }
+  100% { opacity: 0.3; }
+}
+
+/* -------- 32. Reality Bridge -------- */
+.rb-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+}
+
+.rb-world {
+  position: absolute;
+  width: calc(var(--base-size) * 0.4);
+  height: calc(var(--base-size) * 0.4);
+  border-radius: 50%;
+  border: 1px solid var(--subtle-slate);
+}
+
+.rb-world:nth-child(1) {
+  top: 10%;
+  left: 10%;
+  background: radial-gradient(circle at center, var(--primary-blue) 30%, transparent 70%);
+  opacity: 0.6;
+  animation: rb-pulse var(--medium) var(--ease-bounce) infinite alternate;
+}
+
+.rb-world:nth-child(2) {
+  bottom: 10%;
+  right: 10%;
+  background: radial-gradient(circle at center, var(--accent-coral) 30%, transparent 70%);
+  opacity: 0.6;
+  animation: rb-pulse var(--medium) var(--ease-bounce) infinite alternate 0.5s;
+}
+
+.rb-bridge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--base-size) * 0.6);
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-blue), var(--accent-coral));
+  transform: translate(-50%, -50%) rotate(45deg);
+  opacity: 0.5;
+}
+
+.rb-bridge::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-blue), var(--accent-coral));
+  opacity: 0.3;
+  animation: rb-pulse-bridge var(--medium) var(--ease-bounce) infinite;
+}
+
+@keyframes rb-pulse {
+  0% { transform: scale(0.8); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 0.7; }
+}
+
+@keyframes rb-pulse-bridge {
+  0%, 100% { opacity: 0.3; height: 2px; }
+  50% { opacity: 0.8; height: 4px; }
+}
+
+/* -------- 33. Reality Distortion -------- */
+.rd-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+  perspective: 300px;
+}
+
+.rd-field {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, var(--primary-blue) 0%, transparent 70%);
+  opacity: 0.5;
+  animation: reality-distortion var(--slow) var(--ease-precise) infinite;
+}
+
+@keyframes reality-distortion {
+  0%, 100% {
+    transform: scale(0.8) rotateY(0deg);
+    filter: blur(0px);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2) rotateY(180deg);
+    filter: blur(1px);
+    opacity: 0.8;
+  }
+}
+
+/* -------- 34. One More Thing -------- */
+.one-more-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(0,0,0,0.03);
+  border-radius: 4px;
+}
+
+.one-more-text {
+  position: absolute;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  color: var(--primary-blue);
+  animation: one-more-reveal var(--slow) var(--ease-apple) infinite;
+}
+
+.one-more-text:nth-child(1) { animation-delay: 0s; }
+.one-more-text:nth-child(2) { animation-delay: 0.8s; }
+.one-more-text:nth-child(3) { animation-delay: 1.6s; }
+
+@keyframes one-more-reveal {
+  0%, 5% { transform: translate(-50%, 50%); opacity: 0; }
+  15%, 25% { transform: translate(-50%, -50%); opacity: 1; }
+  35%, 100% { transform: translate(-50%, -150%); opacity: 0; }
+}
+
+/* -------- 35. Thousand No's -------- */
+.thousand-nos-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+  background-color: rgba(0,0,0,0.02);
+  border-radius: 4px;
+}
+
+.no-circle {
+  position: absolute;
+  width: calc(var(--tiny) * 2);
+  height: calc(var(--tiny) * 2);
+  border-radius: 50%;
+  background: rgba(0,0,0,0.1);
+  opacity: 0;
+}
+
+.no-circle:nth-child(1) { top: 20%; left: 20%; animation: no-fade var(--medium) ease-out infinite 0.1s; }
+.no-circle:nth-child(2) { top: 20%; left: 50%; animation: no-fade var(--medium) ease-out infinite 0.2s; }
+.no-circle:nth-child(3) { top: 20%; left: 80%; animation: no-fade var(--medium) ease-out infinite 0.3s; }
+.no-circle:nth-child(4) { top: 50%; left: 20%; animation: no-fade var(--medium) ease-out infinite 0.4s; }
+.no-circle:nth-child(5) { top: 50%; left: 50%; animation: no-fade var(--medium) ease-out infinite 0.5s; background: var(--primary-blue); }
+.no-circle:nth-child(6) { top: 50%; left: 80%; animation: no-fade var(--medium) ease-out infinite 0.6s; }
+.no-circle:nth-child(7) { top: 80%; left: 20%; animation: no-fade var(--medium) ease-out infinite 0.7s; }
+.no-circle:nth-child(8) { top: 80%; left: 50%; animation: no-fade var(--medium) ease-out infinite 0.8s; }
+.no-circle:nth-child(9) { top: 80%; left: 80%; animation: no-fade var(--medium) ease-out infinite 0.9s; }
+
+@keyframes no-fade {
+  0% { transform: scale(0); opacity: 0; }
+  15%, 35% { transform: scale(1); opacity: 0.5; }
+  50%, 100% { transform: scale(0); opacity: 0; }
+}
+
+/* -------- 36. Courage Loop -------- */
+.courage-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.courage-ring {
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  border-radius: 40%;
+  top: -25%;
+  left: -25%;
+  border: 2px solid transparent;
+  animation: courage-rotate var(--slow) linear infinite;
+  pointer-events: none;
+}
+
+.courage-ring:nth-child(1) {
+  border-top: 3px solid var(--innovation-orange);
+  animation-duration: 2s;
+}
+
+.courage-ring:nth-child(2) {
+  border-right: 3px solid var(--primary-blue);
+  animation-duration: 3s;
+  animation-direction: reverse;
+}
+
+.courage-ring:nth-child(3) {
+  border-bottom: 3px solid var(--accent-coral);
+  animation-duration: 1.5s;
+}
+
+@keyframes courage-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* -------- 37. Think Loading -------- */
+.think-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0,0.02);
+  border-radius: 4px;
+}
+
+.think-text {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: var(--carbon-black);
+  animation: think-pulse var(--medium) var(--ease-precise) infinite alternate;
+}
+
+@keyframes think-pulse {
+  0% { opacity: 0.3; transform: scale(0.9); letter-spacing: 1px; }
+  100% { opacity: 1; transform: scale(1.1); letter-spacing: 2px; }
+}
+
+/* -------- 38. Innovation Ripple -------- */
+.innovation-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+  transform: translateZ(0);
+}
+
+.innovation-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(var(--base-size) * 0.2);
+  height: calc(var(--base-size) * 0.2);
+  background: var(--innovation-orange);
+  border-radius: 50%;
+  animation: innovation-pulse var(--slow) cubic-bezier(0, 0.6, 0.6, 1) infinite;
+}
+
+.innovation-circle::before,
+.innovation-circle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--innovation-orange);
+  animation: innovation-pulse var(--slow) cubic-bezier(0, 0.6, 0.6, 1) infinite;
+}
+
+.innovation-circle::before {
+  animation-delay: 0.5s;
+}
+
+.innovation-circle::after {
+  animation-delay: 1s;
+}
+
+@keyframes innovation-pulse {
+  0% {
+    opacity: 0.8;
+    width: 0%;
+    height: 0%;
+  }
+  100% {
+    opacity: 0;
+    width: 200%;
+    height: 200%;
+  }
+}
+
+/* -------- 39. Apple Classic -------- */
+.apple-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+  border-radius: 8px;
+  background: var(--apple-white);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.apple-rainbow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    #ff453a 0%,
+    #ff9f0a 20%,
+    #ffd60a 40%,
+    #32d74b 60%,
+    #0a84ff 80%,
+    #bf5af2 100%
+  );
+  animation: apple-scan var(--slow) var(--ease-apple) infinite;
+}
+
+@keyframes apple-scan {
+  0% { transform: translateY(-100%); }
+  20% { transform: translateY(0); }
+  80% { transform: translateY(calc(var(--base-size) - 2px)); }
+  100% { transform: translateY(100%); }
+}
+
+/* -------- 40. Magical Reveal -------- */
+.magical-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 800px;
+  transform: translateZ(0);
+}
+
+.magical-side {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--primary-blue), var(--accent-purple));
+  border-radius: 8px;
+  backface-visibility: hidden;
+  animation: magical-reveal var(--slow) var(--ease-precise) infinite;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.magical-side:nth-child(2) {
+  background: linear-gradient(135deg, var(--accent-coral), var(--gold));
+  transform: rotateY(180deg);
+}
+
+@keyframes magical-reveal {
+  0%, 100% { transform: rotateY(0deg); }
+  50% { transform: rotateY(180deg); }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .ep-loader, .mb-loader::before, .mb-loader::after,
+  .fs-dot, .lp-bar, .ms-loader, .gp-loader, .lf-wave,
+  .cs-dot, .ts-scanner, .qf-particle, .pu-fold, .ho-bar,
+  .cd-loader:before, .oi-ring, .id-drop, .mh-heart,
+  .pc-circle, .zm-line::after, .td-text, .if-droplet,
+  .omt-reveal::before, .ib-arc, .fe-square, .tn-circle::before,
+  .ig-pixel, .cp-line, .ss-bar::after, .cou-path::before,
+  .mc-node, .mc-connection, .df-stream, .nn-node, 
+  .nn-connection::before, .rb-world, .rb-bridge::before,
+  .rd-field, .one-more-text, .no-circle, .courage-ring,
+  .think-text, .innovation-circle, .apple-rainbow, .magical-side {
+    animation: none;
+    opacity: 0.6;
+  }
+
+  .lp-bar, .lf-wave {
+    width: 50%;
+    transform: none;
+  }
+
+  .ts-scanner {
+    left: 50%;
+  }
+
+  .cs-loader:after {
+    opacity: 0.1;
+    transform: none;
+  }
+}
