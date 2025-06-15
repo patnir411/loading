@@ -1722,15 +1722,26 @@ body {
   width: var(--base-size);
   height: var(--base-size);
   border-radius: 50%;
-  background: var(--apple-white);
-  box-shadow: 0 0 0 0 rgba(0,0,0,0.2);
-  animation: halo-pulse 1.5s ease-out infinite;
+  background: radial-gradient(circle at center,
+      var(--apple-white) 40%, var(--soft-blue));
+  box-shadow: 0 0 0 0
+      color-mix(in srgb, var(--primary-blue) 50%, transparent);
+  animation: halo-pulse 2s var(--ease-apple) infinite;
 }
 
 @keyframes halo-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(0,0,0,0.2); }
-  70% { box-shadow: 0 0 0 10px rgba(0,0,0,0); }
-  100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+  0% {
+    box-shadow: 0 0 0 0
+      color-mix(in srgb, var(--primary-blue) 50%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 16px
+      color-mix(in srgb, var(--primary-blue) 0%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0
+      color-mix(in srgb, var(--primary-blue) 0%, transparent);
+  }
 }
 
 /* -------- 48. Aperture Swirl -------- */
@@ -1740,22 +1751,29 @@ body {
   height: var(--base-size);
   border-radius: 50%;
   overflow: hidden;
-  animation: aperture-spin 1.2s linear infinite;
+  animation: aperture-spin 1.6s linear infinite;
 }
 
 .aperture-blade {
   position: absolute;
   width: 50%;
   height: 50%;
-  background: var(--accent-purple);
+  background: linear-gradient(
+      to bottom right,
+      var(--accent-purple),
+      var(--primary-blue)
+  );
+  opacity: 0.85;
   transform-origin: 100% 100%;
   clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 
 .aperture-loader .aperture-blade:nth-child(1) { transform: rotate(0deg); }
-.aperture-loader .aperture-blade:nth-child(2) { transform: rotate(90deg); }
-.aperture-loader .aperture-blade:nth-child(3) { transform: rotate(180deg); }
-.aperture-loader .aperture-blade:nth-child(4) { transform: rotate(270deg); }
+.aperture-loader .aperture-blade:nth-child(2) { transform: rotate(60deg); }
+.aperture-loader .aperture-blade:nth-child(3) { transform: rotate(120deg); }
+.aperture-loader .aperture-blade:nth-child(4) { transform: rotate(180deg); }
+.aperture-loader .aperture-blade:nth-child(5) { transform: rotate(240deg); }
+.aperture-loader .aperture-blade:nth-child(6) { transform: rotate(300deg); }
 
 @keyframes aperture-spin {
   to { transform: rotate(360deg); }
@@ -1771,19 +1789,25 @@ body {
 
 .silk-line {
   position: absolute;
-  width: 120%;
+  width: 140%;
   height: 100%;
-  background: var(--primary-blue);
-  opacity: 0.4;
-  animation: silk-slide 1.2s linear infinite;
+  background: linear-gradient(
+      to right,
+      var(--accent-coral),
+      var(--primary-blue)
+  );
+  opacity: 0.5;
+  transform: skewX(-20deg);
+  animation: silk-slide 1.4s linear infinite;
 }
 
 .silk-line:nth-child(2) { animation-delay: 0.2s; }
 .silk-line:nth-child(3) { animation-delay: 0.4s; }
+.silk-line:nth-child(4) { animation-delay: 0.6s; }
 
 @keyframes silk-slide {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% { transform: translateX(-100%) skewX(-20deg); }
+  100% { transform: translateX(100%) skewX(-20deg); }
 }
 
 /* -------- 50. Fusion Flash -------- */
@@ -1796,32 +1820,45 @@ body {
 .fusion-circle {
   position: absolute;
   top: 50%;
-  width: 40%;
-  height: 40%;
+  width: 35%;
+  height: 35%;
   border-radius: 50%;
   background: var(--accent-coral);
 }
 
 .fusion-circle:nth-child(1) {
   left: 0;
-  transform: translate(0, -50%);
-  animation: fusion-left 1s var(--ease-bounce) infinite;
+  transform: translate(0, -50%) scale(0.8);
+  animation: fusion-left 1.2s var(--ease-precise) infinite;
 }
 
 .fusion-circle:nth-child(2) {
   right: 0;
-  transform: translate(0, -50%);
-  animation: fusion-right 1s var(--ease-bounce) infinite;
+  background: var(--primary-blue);
+  transform: translate(0, -50%) scale(0.8);
+  animation: fusion-right 1.2s var(--ease-precise) infinite;
 }
 
 @keyframes fusion-left {
-  0%, 100% { transform: translate(0, -50%); }
-  50% { transform: translate(50%, -50%); }
+  0%, 100% {
+    transform: translate(0, -50%) scale(0.8);
+    background: var(--accent-coral);
+  }
+  50% {
+    transform: translate(50%, -50%) scale(1.2);
+    background: var(--accent-purple);
+  }
 }
 
 @keyframes fusion-right {
-  0%, 100% { transform: translate(0, -50%); }
-  50% { transform: translate(-50%, -50%); }
+  0%, 100% {
+    transform: translate(0, -50%) scale(0.8);
+    background: var(--primary-blue);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    background: var(--accent-purple);
+  }
 }
 
 /* Respect reduced-motion preference */

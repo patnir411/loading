@@ -131,8 +131,13 @@ describe('Loading Indicators', () => {
       } else if (loaderClass === 'rb-loader') {
         expect(loader?.querySelectorAll('.rb-world').length).toBe(2);
         expect(loader?.querySelector('.rb-bridge')).not.toBeNull();
+      } else if (loaderClass === 'aperture-loader') {
+        expect(loader?.querySelectorAll('.aperture-blade').length).toBe(6);
+      } else if (loaderClass === 'silk-loader') {
+        expect(loader?.querySelectorAll('.silk-line').length).toBe(4);
+      } else if (loaderClass === 'fusion-loader') {
+        expect(loader?.querySelectorAll('.fusion-circle').length).toBe(2);
       }
-      // Add checks for other loaders
     });
   });
 });
