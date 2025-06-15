@@ -38,7 +38,8 @@ describe('Loading Indicators', () => {
       'cp-loader', 'ss-loader', 'cou-loader', 'mc-loader', 'df-loader',
       'nn-loader', 'rb-loader', 'rd-loader', 'one-more-loader', 'thousand-nos-loader',
       'courage-loader', 'think-loader', 'innovation-loader', 'apple-loader', 'magical-loader',
-      'aqua-loader', 'bezel-loader', 'wave-loader', 'grid-loader', 'signal-loader'
+      'aqua-loader', 'bezel-loader', 'wave-loader', 'grid-loader', 'signal-loader',
+      'titanium-loader', 'halo-loader', 'aperture-loader', 'silk-loader', 'fusion-loader'
     ];
     
     test.each(loaderTypes)('Loader %s exists in the DOM', (loaderClass) => {
@@ -116,7 +117,8 @@ describe('Loading Indicators', () => {
       'nn-loader', 'rb-loader', 'rd-loader', 'one-more-loader',
       'thousand-nos-loader', 'courage-loader', 'think-loader',
       'innovation-loader', 'apple-loader', 'magical-loader',
-      'aqua-loader', 'bezel-loader', 'wave-loader', 'grid-loader', 'signal-loader'
+      'aqua-loader', 'bezel-loader', 'wave-loader', 'grid-loader', 'signal-loader',
+      'titanium-loader', 'halo-loader', 'aperture-loader', 'silk-loader', 'fusion-loader'
     ];
     
     test.each(lastLoaders)('%s has correct children elements', (loaderClass) => {
