@@ -17,9 +17,11 @@ body {
 
 .indicators-container {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 50px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 40px;
   padding: 40px;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .loader-cell {
@@ -1566,6 +1568,299 @@ body {
   50% { transform: rotateY(180deg); }
 }
 
+/* -------- 41. Aqua Spin -------- */
+.aqua-loader {
+  position: relative;
+  width: var(--base-size);
+  height: var(--base-size);
+}
+
+.aqua-bar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--base-size) / 10);
+  height: calc(var(--base-size) / 3);
+  background: var(--primary-blue);
+  border-radius: calc(var(--base-size) / 20);
+  transform-origin: center calc(var(--base-size) / -4);
+  opacity: 0.2;
+  animation: aqua-fade 1s linear infinite;
+}
+
+.aqua-loader .aqua-bar:nth-child(1) { transform: rotate(0deg); animation-delay: 0s; }
+.aqua-loader .aqua-bar:nth-child(2) { transform: rotate(45deg); animation-delay: 0.125s; }
+.aqua-loader .aqua-bar:nth-child(3) { transform: rotate(90deg); animation-delay: 0.25s; }
+.aqua-loader .aqua-bar:nth-child(4) { transform: rotate(135deg); animation-delay: 0.375s; }
+.aqua-loader .aqua-bar:nth-child(5) { transform: rotate(180deg); animation-delay: 0.5s; }
+.aqua-loader .aqua-bar:nth-child(6) { transform: rotate(225deg); animation-delay: 0.625s; }
+.aqua-loader .aqua-bar:nth-child(7) { transform: rotate(270deg); animation-delay: 0.75s; }
+.aqua-loader .aqua-bar:nth-child(8) { transform: rotate(315deg); animation-delay: 0.875s; }
+
+@keyframes aqua-fade {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+/* -------- 42. Bezel Bounce -------- */
+.bezel-loader {
+  display: flex;
+  align-items: flex-end;
+  width: var(--base-size);
+  height: calc(var(--base-size) / 3);
+  gap: calc(var(--base-size) / 10);
+}
+
+.bezel-bar {
+  flex: 1;
+  height: 100%;
+  background: var(--accent-coral);
+  border-radius: 2px;
+  animation: bezel-bounce 1s var(--ease-bounce) infinite;
+}
+
+.bezel-bar:nth-child(2) { animation-delay: 0.2s; }
+
+@keyframes bezel-bounce {
+  0%, 100% { transform: scaleY(0.5); }
+  50% { transform: scaleY(1); }
+}
+
+/* -------- 43. Wave Lines -------- */
+.wave-loader {
+  display: flex;
+  gap: calc(var(--base-size) / 12);
+}
+
+.wave-line {
+  width: calc(var(--base-size) / 8);
+  height: calc(var(--base-size) / 2);
+  background: var(--primary-blue);
+  border-radius: calc(var(--base-size) / 16);
+  animation: wave-rise 1.2s var(--ease-natural) infinite;
+}
+
+.wave-line:nth-child(2) { animation-delay: 0.1s; }
+.wave-line:nth-child(3) { animation-delay: 0.2s; }
+.wave-line:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes wave-rise {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+/* -------- 44. Grid Flicker -------- */
+.grid-loader {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  width: calc(var(--base-size) * 0.9);
+  height: calc(var(--base-size) * 0.9);
+}
+
+.grid-block {
+  background: var(--primary-blue);
+  animation: grid-fade 1.2s linear infinite;
+}
+
+.grid-block:nth-child(2) { animation-delay: 0.1s; }
+.grid-block:nth-child(3) { animation-delay: 0.2s; }
+.grid-block:nth-child(4) { animation-delay: 0.3s; }
+.grid-block:nth-child(5) { animation-delay: 0.4s; }
+.grid-block:nth-child(6) { animation-delay: 0.5s; }
+.grid-block:nth-child(7) { animation-delay: 0.6s; }
+.grid-block:nth-child(8) { animation-delay: 0.7s; }
+.grid-block:nth-child(9) { animation-delay: 0.8s; }
+
+@keyframes grid-fade {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+/* -------- 45. Signal Bars -------- */
+.signal-loader {
+  display: flex;
+  align-items: flex-end;
+  gap: calc(var(--base-size) / 12);
+  width: var(--base-size);
+  height: calc(var(--base-size) / 2);
+}
+
+.signal-bar {
+  width: calc(var(--base-size) / 8);
+  background: var(--primary-blue);
+  border-radius: 2px;
+  animation: signal-rise 1s var(--ease-bounce) infinite;
+}
+
+.signal-bar:nth-child(1) { height: 20%; animation-delay: 0s; }
+.signal-bar:nth-child(2) { height: 40%; animation-delay: 0.1s; }
+.signal-bar:nth-child(3) { height: 60%; animation-delay: 0.2s; }
+.signal-bar:nth-child(4) { height: 80%; animation-delay: 0.3s; }
+
+@keyframes signal-rise {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* -------- 46. Titanium Spin -------- */
+.titanium-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  border-radius: 50%;
+  border: 4px solid var(--silver);
+  border-top-color: var(--carbon-black);
+  animation: titanium-spin 1s linear infinite;
+}
+
+@keyframes titanium-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* -------- 47. Halo Glow -------- */
+.halo-loader {
+  width: var(--base-size);
+  height: var(--base-size);
+  border-radius: 50%;
+  background: radial-gradient(circle at center,
+      var(--apple-white) 40%, var(--soft-blue));
+  box-shadow: 0 0 0 0
+      color-mix(in srgb, var(--primary-blue) 50%, transparent);
+  animation: halo-pulse 2s var(--ease-apple) infinite;
+}
+
+@keyframes halo-pulse {
+  0% {
+    box-shadow: 0 0 0 0
+      color-mix(in srgb, var(--primary-blue) 50%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 16px
+      color-mix(in srgb, var(--primary-blue) 0%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0
+      color-mix(in srgb, var(--primary-blue) 0%, transparent);
+  }
+}
+
+/* -------- 48. Aperture Swirl -------- */
+.aperture-loader {
+  position: relative;
+  width: var(--base-size);
+  height: var(--base-size);
+  border-radius: 50%;
+  overflow: hidden;
+  animation: aperture-spin 1.6s linear infinite;
+}
+
+.aperture-blade {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  background: linear-gradient(
+      to bottom right,
+      var(--accent-purple),
+      var(--primary-blue)
+  );
+  opacity: 0.85;
+  transform-origin: 100% 100%;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.aperture-loader .aperture-blade:nth-child(1) { transform: rotate(0deg); }
+.aperture-loader .aperture-blade:nth-child(2) { transform: rotate(60deg); }
+.aperture-loader .aperture-blade:nth-child(3) { transform: rotate(120deg); }
+.aperture-loader .aperture-blade:nth-child(4) { transform: rotate(180deg); }
+.aperture-loader .aperture-blade:nth-child(5) { transform: rotate(240deg); }
+.aperture-loader .aperture-blade:nth-child(6) { transform: rotate(300deg); }
+
+@keyframes aperture-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* -------- 49. Silk Slide -------- */
+.silk-loader {
+  position: relative;
+  width: var(--base-size);
+  height: calc(var(--base-size) / 3);
+  overflow: hidden;
+}
+
+.silk-line {
+  position: absolute;
+  width: 140%;
+  height: 100%;
+  background: linear-gradient(
+      to right,
+      var(--accent-coral),
+      var(--primary-blue)
+  );
+  opacity: 0.5;
+  transform: skewX(-20deg);
+  animation: silk-slide 1.4s linear infinite;
+}
+
+.silk-line:nth-child(2) { animation-delay: 0.2s; }
+.silk-line:nth-child(3) { animation-delay: 0.4s; }
+.silk-line:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes silk-slide {
+  0% { transform: translateX(-100%) skewX(-20deg); }
+  100% { transform: translateX(100%) skewX(-20deg); }
+}
+
+/* -------- 50. Fusion Flash -------- */
+.fusion-loader {
+  position: relative;
+  width: var(--base-size);
+  height: var(--base-size);
+}
+
+.fusion-circle {
+  position: absolute;
+  top: 50%;
+  width: 35%;
+  height: 35%;
+  border-radius: 50%;
+  background: var(--accent-coral);
+}
+
+.fusion-circle:nth-child(1) {
+  left: 0;
+  transform: translate(0, -50%) scale(0.8);
+  animation: fusion-left 1.2s var(--ease-precise) infinite;
+}
+
+.fusion-circle:nth-child(2) {
+  right: 0;
+  background: var(--primary-blue);
+  transform: translate(0, -50%) scale(0.8);
+  animation: fusion-right 1.2s var(--ease-precise) infinite;
+}
+
+@keyframes fusion-left {
+  0%, 100% {
+    transform: translate(0, -50%) scale(0.8);
+    background: var(--accent-coral);
+  }
+  50% {
+    transform: translate(50%, -50%) scale(1.2);
+    background: var(--accent-purple);
+  }
+}
+
+@keyframes fusion-right {
+  0%, 100% {
+    transform: translate(0, -50%) scale(0.8);
+    background: var(--primary-blue);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    background: var(--accent-purple);
+  }
+}
+
 /* Respect reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
   .ep-loader, .mb-loader::before, .mb-loader::after,
@@ -1578,7 +1873,8 @@ body {
   .mc-node, .mc-connection, .df-stream, .nn-node, 
   .nn-connection::before, .rb-world, .rb-bridge::before,
   .rd-field, .one-more-text, .no-circle, .courage-ring,
-  .think-text, .innovation-circle, .apple-rainbow, .magical-side {
+  .think-text, .innovation-circle, .apple-rainbow, .magical-side,
+  .titanium-loader, .halo-loader, .aperture-blade, .silk-line, .fusion-circle {
     animation: none;
     opacity: 0.6;
   }
