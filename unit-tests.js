@@ -15,18 +15,16 @@
 // Sample Jest test implementation
 
 describe('Loading Indicators', () => {
-  // Set up the document with our loading indicators
+  // Load the actual HTML and CSS so tests can query real elements
   beforeAll(() => {
-    // This would typically load the HTML content
-    document.body.innerHTML = `
-      <div class="indicators-container">
-        <!-- All loaders would be here -->
-      </div>
-    `;
-    
-    // Add the styles
+    const fs = require('fs');
+    const html = fs.readFileSync(require.resolve('./index.html'), 'utf8');
+    const css = fs.readFileSync(require.resolve('./styles.css'), 'utf8');
+
+    document.documentElement.innerHTML = html;
+
     const styleElement = document.createElement('style');
-    styleElement.textContent = `/* CSS content would be here */`;
+    styleElement.textContent = css;
     document.head.appendChild(styleElement);
   });
 
@@ -39,7 +37,8 @@ describe('Loading Indicators', () => {
       'omt-loader', 'ib-loader', 'fe-loader', 'tn-loader', 'ig-loader',
       'cp-loader', 'ss-loader', 'cou-loader', 'mc-loader', 'df-loader',
       'nn-loader', 'rb-loader', 'rd-loader', 'one-more-loader', 'thousand-nos-loader',
-      'courage-loader', 'think-loader', 'innovation-loader', 'apple-loader', 'magical-loader'
+      'courage-loader', 'think-loader', 'innovation-loader', 'apple-loader', 'magical-loader',
+      'aqua-loader', 'bezel-loader', 'wave-loader', 'grid-loader', 'signal-loader'
     ];
     
     test.each(loaderTypes)('Loader %s exists in the DOM', (loaderClass) => {
@@ -114,9 +113,10 @@ describe('Loading Indicators', () => {
   // Testing specific loaders (example with the last 8-12 loaders)
   describe('Last 8-12 Loaders Tests', () => {
     const lastLoaders = [
-      'nn-loader', 'rb-loader', 'rd-loader', 'one-more-loader', 
-      'thousand-nos-loader', 'courage-loader', 'think-loader', 
-      'innovation-loader', 'apple-loader', 'magical-loader'
+      'nn-loader', 'rb-loader', 'rd-loader', 'one-more-loader',
+      'thousand-nos-loader', 'courage-loader', 'think-loader',
+      'innovation-loader', 'apple-loader', 'magical-loader',
+      'aqua-loader', 'bezel-loader', 'wave-loader', 'grid-loader', 'signal-loader'
     ];
     
     test.each(lastLoaders)('%s has correct children elements', (loaderClass) => {
